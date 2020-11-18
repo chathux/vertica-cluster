@@ -1,5 +1,11 @@
 # vertica-cluster
 
+###
+download vertica setup and place it under local_media
+https://www.dropbox.com/s/e7f7i7t40j0lo2w/vertica-9.2.1-8.x86_64.RHEL6.rpm?dl=0
+
+
+
 ### Step 1  
 `docker compose up`
 
