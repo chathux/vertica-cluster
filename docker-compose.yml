@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+    vertica-node1:
+        #command: tail -F anything
+        container_name: vertica-node1
+        privileged: true
+        expose:
+            - "5433"
+        ports:
+            - "10001:5433"
+        build:
+            context: .
+            dockerfile: vertica-node1.dockerfile
+        depends_on:
+            - vertica-node2
+            - vertica-node3            
+        networks:
+            nifi_lan:
+                ipv4_address: 10.91.200.91
+                aliases:
+                    - vertica-node1
+
+    vertica-node2:
+        #command: tail -F anything
+        container_name: vertica-node2
+        privileged: true
+        expose:
+            - "5433"        
+        ports:
+            - "10002:5433"
+        build:
+            context: .
+            dockerfile: vertica-node2.dockerfile
+        networks:
+            nifi_lan:
+                ipv4_address: 10.91.200.92
+                aliases:
+                    - vertica-node2
+    vertica-node3:
+        #command: tail -F anything
+        container_name: vertica-node3
+        privileged: true
+        expose:
+            - "5433"        
+        ports:
+            - "10003:5433"
+        build:
+            context: .
+            dockerfile: vertica-node3.dockerfile
+        networks:
+            nifi_lan:
+                ipv4_address: 10.91.200.93
+                aliases:
+                    - vertica-node3
+
+networks:
+    nifi_lan:
+        name: bridge_vertica_lan
+        driver: bridge 
+        ipam:
+            config:
+              - subnet: 10.91.200.0/24
